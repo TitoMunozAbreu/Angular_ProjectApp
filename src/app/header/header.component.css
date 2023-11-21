@@ -1,0 +1,9 @@
+.custom-dropdown {
+    margin-left: auto;
+  }
+  
+  .dropdown-menu-end {
+    right: 0;
+    left: auto;
+  }
+  

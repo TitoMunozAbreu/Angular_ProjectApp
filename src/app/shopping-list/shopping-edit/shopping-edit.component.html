@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col col-sm-4">
+        <div class="form">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id=" name"
+                 #nameInput>
+            <!-- <label for=" name" >{{ ingredient.name }}</label> -->
+        </div>
+    </div>
+    <div class="col col-sm-2">
+        <div class="form">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" id="amount"
+            #amountInput>
+            <!-- <label for="amount">{{ ingredient.amount }}</label> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-xs-12 my-2">
+            <button type="button" class="btn btn-success "
+            (click)="add()"
+            [disabled]="">Add</button>
+            <button type="button" class="btn btn-outline-danger bg-danger-subtle mx-2"
+            [disabled]=""
+            >Delete</button>
+            <button type="button" class="btn btn-outline-info bg-info-subtle "
+            [disabled]=""
+            >Clear</button>
+        </div>
+    </div>
+</div>

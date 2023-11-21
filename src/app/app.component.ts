@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { RecipeService } from './recipes/recipe.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'projectApp';
+  // loadedFeature = "recipes";
+
+  // onNavigate(feature:string){
+  //   this.loadedFeature = feature;
+  // }
 }
