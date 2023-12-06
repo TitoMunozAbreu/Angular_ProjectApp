@@ -1,31 +1,60 @@
 <div class="row">
-    <div class="col col-sm-4">
-        <div class="form">
+    <form 
+        #f = "ngForm"
+        (ngSubmit)="onSubmit(f)">
+        <div class="form-group col-lg-2">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id=" name"
-                 #nameInput>
-            <!-- <label for=" name" >{{ ingredient.name }}</label> -->
+            <input 
+                class="form-control"
+                type="text"
+                ngModel
+                id="name"
+                name="name"
+                #name = "ngModel"
+                required
+            >
+            <span *ngIf="!name.valid && name.touched">
+                <span *ngIf="name.errors['required']">Enter name</span>                
+            </span>
         </div>
-    </div>
-    <div class="col col-sm-2">
-        <div class="form">
+        <div class="form-group col-lg-1">
             <label for="amount">Amount</label>
-            <input type="number" class="form-control" id="amount"
-            #amountInput>
-            <!-- <label for="amount">{{ ingredient.amount }}</label> -->
+            <input 
+                class="form-control"
+                type="number"
+                ngModel
+                id="amount"
+                name="amount"
+                #amount = "ngModel"
+                required
+                [pattern]="'^[1-9]+[0-9]*$'"
+            >
+            <span *ngIf="!amount.valid && amount.touched">
+                <span *ngIf="amount.errors['pattern']">Invalid number</span>
+                <span *ngIf="amount.errors['required']">Enter number</span>
+            </span>
         </div>
-    </div>
-    <div class="row">
-        <div class="col col-xs-12 my-2">
-            <button type="button" class="btn btn-success "
-            (click)="add()"
-            [disabled]="">Add</button>
-            <button type="button" class="btn btn-outline-danger bg-danger-subtle mx-2"
-            [disabled]=""
-            >Delete</button>
-            <button type="button" class="btn btn-outline-info bg-info-subtle "
-            [disabled]=""
-            >Clear</button>
+        <div class="row">
+            <div class="col col-xs-12 my-2">
+                <button 
+                    [disabled]="!f.valid" 
+                    type="submit" 
+                    class="btn btn-outline-success bg-success-subtle mx-1"
+                > {{ editMode ? 'Update': 'Add'}}
+                </button>
+                <button 
+                    type="button" 
+                    class="btn btn-outline-danger bg-danger-subtle mx-1"
+                    (click)="onDelete()"
+                    *ngIf="editMode">Delete
+                </button>
+                <button 
+                    type="button" 
+                    class="btn btn-outline-info bg-info-subtle mx-1"
+                    (click)="onClear()"
+                >Clear
+                </button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

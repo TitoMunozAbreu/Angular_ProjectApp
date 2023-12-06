@@ -2,10 +2,12 @@ import { EventEmitter, Injectable } from "@angular/core";
 import { Recipe } from "./recipe.model";
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class RecipeService {
-    
+    recipeChanged = new Subject<Recipe[]>
+
     private recipes: Recipe [] = [
         new Recipe("Chicken Grill", 
         "This easy grilled chicken and vegetables recipe takes 30 minutes to make and is a delicious, healthy ", 
@@ -35,6 +37,29 @@ export class RecipeService {
 
     getRecipe(index: number){
         return this.recipes[index];
+    }
+
+    addRecipe(recipe: Recipe){
+        //add the new recipe
+        this.recipes.push(recipe)
+        //notify the changes
+        this.recipeChanged.next(this.recipes.slice())
+        
+    }
+
+    updateRecipe(index: number, recipe: Recipe){
+        this.recipes[index] = recipe
+        this.recipeChanged.next(this.recipes.slice())
+    }
+
+    deleteRecipe(index: number){
+        this.recipes.splice(index,1)
+        this.recipeChanged.next(this.recipes.slice())
+    }
+
+     recipeNameExists(nameToSearch: string){        
+        return this.recipes.some(recipe => recipe.name == nameToSearch)
+
     }
 
     addIngredientsToShoppingList(ingredients: Ingredient []){
