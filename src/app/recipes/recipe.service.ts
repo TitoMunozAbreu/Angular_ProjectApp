@@ -8,7 +8,7 @@ import { Subject } from "rxjs";
 export class RecipeService {
     recipeChanged = new Subject<Recipe[]>
 
-    private recipes: Recipe [] = [
+/*     private recipes: Recipe [] = [
         new Recipe("Chicken Grill", 
         "This easy grilled chicken and vegetables recipe takes 30 minutes to make and is a delicious, healthy ", 
         "https://simply-delicious-food.com/wp-content/uploads/2019/04/30-minute-grilled-chicken-and-vegetables-3.jpg",
@@ -27,9 +27,16 @@ export class RecipeService {
             new Ingredient('beer', 1)
         ])
         
-    ];
+    ]; */
+
+    private recipes: Recipe [] = []
     
     constructor(private slService: ShoppingListService){}
+
+    setRecipes(recipes: Recipe[]){
+        this.recipes = recipes
+        this.recipeChanged.next(this.recipes.slice())
+    }
 
     getRecipes(){
         return this.recipes.slice();

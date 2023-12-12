@@ -38,16 +38,17 @@
                             class=form-control
                             type="text"
                             id="imagePath"              
-                            formControlName="imagePath">
+                            formControlName="imagePath"
+                            #imagePath>
                         <span *ngIf="!recipeForm.get('imagePath').valid && recipeForm.get('imagePath').touched">
                             <span *ngIf="isInvalid('imagePath')">Enter imagePath</span>
                         </span>
                     </div>
                 </div>
             </div>
-            <div [class]="recipeForm.get('imagePath').value === '' ? 'row': 'row my-4'">
+            <div [class]="imagePath === '' ? 'row': 'row my-4'">
                 <div class="col col-xs-12">
-                    <img [src]="recipeForm.get('imagePath').value" class="img-fluid mx-auto w-25">
+                    <img [src]="imagePath.value" class="img-fluid mx-auto w-25">
                 </div>
             </div>
             <div class="row">
@@ -83,10 +84,10 @@
                                 <input 
                                     type="text"
                                     class="form-control"
-                                    formControlName = "name">
-                                    <span *ngIf="!recipeForm.get('ingredients').valid && recipeForm.get('ingredients').touched">
-                                        <span *ngIf="isInvalidArray('name', i)">Enter name</span>
-                                    </span>
+                                    formControlName = "name">      
+                                    <span *ngIf="isInvalidFormGroup('name',i)">      
+                                    <span *ngIf="isInvalidArray('name', i)">Enter name</span>
+                                </span>
                             </div>
                             <div class="col col-xs-2">
                                 <label for="amount">Amount</label>
@@ -94,13 +95,16 @@
                                     type="number"
                                     class="form-control"
                                     formControlName="amount">
-                                    <span *ngIf="!recipeForm.get('ingredients').valid && recipeForm.get('ingredients').touched">
+                                    <span *ngIf="isInvalidFormGroup('amount',i)">
                                         <span *ngIf="isInvalidArray('amount', i)">Enter amout</span>
                                         <span *ngIf="isInvalidPattern('amount', i)">Enter a valid amout</span>
                                     </span>
                             </div>
                             <div class="col col-xs-2">
-                                <button type="button" class="btn btn-outline-danger my-4">X</button>
+                                <button 
+                                    (click)="onDeleteIngredient(i)"
+                                    type="button" 
+                                    class="btn btn-outline-danger my-4">X</button>
                             </div>
                         </div>
                     </div>                    

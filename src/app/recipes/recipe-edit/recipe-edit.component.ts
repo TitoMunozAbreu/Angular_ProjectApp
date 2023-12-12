@@ -40,7 +40,6 @@ export class RecipeEditComponent implements OnInit{
     let recipeDescription = ''
     let recipeIngredients = []
 
-
     if(this.editMode){
       const recipe = this.recipeService.getRecipe(this.id)
       recipeName = recipe.name
@@ -95,18 +94,28 @@ export class RecipeEditComponent implements OnInit{
     )    
   }
   
+  onDeleteIngredient(index: number){
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index)
+  }
+
   isInvalid(field: string){
     return this.recipeForm.get(field)?.errors?.required
   }
 
-  isInvalidArray(field: string, index:number){
-    const fieldControl = this.controls.at(index).get(field)
-    return fieldControl?.errors?.required
+  isInvalidFormGroup(field: string, index:number): boolean {
+    const formGroup = this.controls[index] as FormGroup
+    return !formGroup.get(field).valid && formGroup.get(field).touched
+  }
+
+  isInvalidArray(field: string, index:number): boolean {
+    const formGroup = this.controls[index] as FormGroup
+    return formGroup.get(field)?.errors?.required;
+  
   }
 
   isInvalidPattern(field: string, index:number){
-    const fieldControl = this.controls.at(index).get(field)
-    return fieldControl?.errors?.pattern
+    const formGroup = this.controls[index] as FormGroup
+    return formGroup.get(field)?.errors?.pattern
   }
 
   //async validation
