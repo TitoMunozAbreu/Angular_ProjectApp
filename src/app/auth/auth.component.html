@@ -6,11 +6,6 @@
                 <strong>{{ error }}</strong> 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <!-- success msg -->
-            <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="isAuthtenticated">
-                 <strong>User authtenticated</strong> 
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
         </div>
         <!-- display loading spinner -->
         <div class="d-flex justify-content-center" *ngIf="isLoading">

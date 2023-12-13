@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { RecipeService } from "../recipes/recipe.service";
-import { Subject, map, tap } from "rxjs";
+import { Subject, exhaustMap, map, pipe, take, tap } from "rxjs";
 import { Recipe } from "../recipes/recipe.model";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({providedIn:"root"})
 export class DataStorageService {
@@ -10,7 +11,8 @@ export class DataStorageService {
     private baseURL = 'https://papaya-api-v1-default-rtdb.firebaseio.com'
 
     constructor(private http: HttpClient,
-                private recipeService: RecipeService){}
+                private recipeService: RecipeService,
+                private authService: AuthService){}
 
     storageData(){
       this.http.put(`${this.baseURL}/recipe.json`, 
@@ -24,21 +26,20 @@ export class DataStorageService {
                 })
     }
 
-    fetchData(){
-        return this.http.get<Recipe[]>(`${this.baseURL}/recipe.json`)
-                        .pipe(
-                            map(recipe => {
-                                return recipe.map(recipe => {
-                                    return {
-                                        ...recipe, 
-                                        ingredients: recipe.ingredients ? recipe.ingredients : []
-                                    }
-                                })
-                            }),
-                            tap(recipe => {
-                                this.recipeService.setRecipes(recipe)
-                            })
-                        )        
+    fetchData(){ 
+    return this.http.get<Recipe[]>(`${this.baseURL}/recipe.json`)
+            .pipe( 
+            map(recipe => {
+                return recipe.map(recipe => {
+                    return {
+                        ...recipe, 
+                        ingredients: recipe.ingredients ? recipe.ingredients : []
+                    }
+                })
+            }),
+            tap(recipe => {
+                this.recipeService.setRecipes(recipe)
+            }))
     }
 
 }

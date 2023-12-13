@@ -6,13 +6,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" routerLinkActive="active" [routerLink]="['auth']">Authenticate</a></li>
-          <li class="nav-item"><a class="nav-link" routerLinkActive="active" [routerLink]="['recipes']">Recipes</a></li>
+          <li class="nav-item" *ngIf="!isAuthtenticated"><a class="nav-link" routerLinkActive="active" [routerLink]="['auth']">Authenticate</a></li>
+          <li class="nav-item" *ngIf="isAuthtenticated"><a class="nav-link" routerLinkActive="active" [routerLink]="['recipes']">Recipes</a></li>
           <li class="nav-item"><a class="nav-link" routerLinkActive="active" [routerLink]="['shopping-list']">Shopping List</a></li>
         </ul>
-        <ul class="nav navbar-nav custom-dropdown">
-          <li class="nav-item dropdown">          
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+        <ul class="nav navbar-nav custom-dropdown" *ngIf="isAuthtenticated">
+          <li class="nav-item dropdown mx-2">          
+            <a class="btn btn-outline-warning dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Manage
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -20,6 +21,7 @@
               <li><a class="dropdown-item" type="button"(click)="fetchData()">Fetch Data</a></li>
             </ul>
           </li>
+          <li class="nav-item" *ngIf="isAuthtenticated"><a class="btn btn-outline-danger" type="button" (click)="onLogout()">Logout</a></li>         
         </ul>
       </div>
     </div>
